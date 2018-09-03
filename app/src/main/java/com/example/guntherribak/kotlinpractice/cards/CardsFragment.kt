@@ -28,7 +28,7 @@ class CardsFragment : BaseFragment<CardsViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupRecyclerView()
         viewModel.liveData.observe(
-                this,
+                viewLifecycleOwner,
                 Observer(adapter::submitList))
         viewModel.fetchCards()
     }

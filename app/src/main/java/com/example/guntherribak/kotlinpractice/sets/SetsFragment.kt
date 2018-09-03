@@ -21,7 +21,8 @@ class SetsFragment : BaseFragment<SetsViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupRecyclerView()
         viewModel.liveData.observe(
-                this, Observer(adapter::submitList))
+                viewLifecycleOwner,
+                Observer(adapter::submitList))
         viewModel.fetchSets()
     }
 
