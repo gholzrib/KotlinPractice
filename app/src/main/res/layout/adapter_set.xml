@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="com.example.guntherribak.kotlinpractice.data.set.SetModel"/>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/setsCodeAndName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:text="(KTK) Khans of Tarkir"
+            android:textStyle="bold"
+            app:code="@{item.code}"
+            app:name="@{item.name}"/>
+
+        <TextView
+            android:id="@+id/setsType"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textStyle="italic"
+            tools:text="expansion"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/setsCodeAndName"
+            android:text="@{item.type}"/>
+
+        <TextView
+            android:id="@+id/setsReleaseDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="2014-09-26"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/setsType"
+            android:text="@{item.releaseDate}"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>
