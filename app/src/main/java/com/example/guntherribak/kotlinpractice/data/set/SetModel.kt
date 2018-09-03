@@ -11,7 +11,7 @@ data class SetModel(val code: String,
 
         @JvmStatic
         @BindingAdapter("code", "name")
-        fun codeAndName(view : TextView, code : String, name: String) {
+        fun codeAndName(view: TextView, code: String, name: String) {
             val codeAndName = "($code) $name"
             view.text = codeAndName
         }

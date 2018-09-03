@@ -1,26 +1,29 @@
 package com.example.guntherribak.kotlinpractice.cards
 
-import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.MediatorLiveData
 import android.arch.lifecycle.ViewModel
+import android.arch.paging.LivePagedListBuilder
+import android.arch.paging.PagedList
 import com.example.guntherribak.kotlinpractice.data.card.CardModel
-import com.example.guntherribak.kotlinpractice.data.card.CardsDataSource
-import com.example.guntherribak.kotlinpractice.data.card.CardsRepository
-import com.example.guntherribak.kotlinpractice.data.card.remote.CardsRemoteDataSource
+import com.example.guntherribak.kotlinpractice.data.card.remote.CardsApiService
+import com.example.guntherribak.kotlinpractice.data.card.remote.CardsPagingRemoteDataSourceFactory
 
-class CardsViewModel(private val repository: CardsRepository) : ViewModel() {
+class CardsViewModel : ViewModel() {
 
-    var liveData: MutableLiveData<List<CardModel>> = MutableLiveData()
+    var liveData: MediatorLiveData<PagedList<CardModel>> = MediatorLiveData()
 
-    fun loadCards() {
-        repository.getCards(object : CardsDataSource.OnCardsLoadedCallback {
-            override fun onCardsLoaded(cards: List<CardModel>) {
-                liveData.value = cards
-            }
+    fun createCardsPagedList() = LivePagedListBuilder<Int, CardModel>(
+            CardsPagingRemoteDataSourceFactory(),
+            PagedList.Config.Builder()
+                    .setEnablePlaceholders(false)
+                    .setPageSize(CardsApiService.PAGE_SIZE)
+                    .build()
+    ).build()
 
-            override fun onDataNotAvailable() {
-                liveData.value = mutableListOf()
-            }
-        })
+    fun fetchCards() {
+        liveData.addSource(createCardsPagedList()) {
+            liveData.value = it
+        }
     }
 
     companion object {
@@ -29,9 +32,9 @@ class CardsViewModel(private val repository: CardsRepository) : ViewModel() {
 
         fun getInstance(): CardsViewModel {
             if (INSTANCE == null) {
-                INSTANCE = CardsViewModel(CardsRepository.getInstance(CardsRemoteDataSource.getInstance()))
+                INSTANCE = CardsViewModel()
             }
-            return INSTANCE as CardsViewModel
+            return INSTANCE!!
         }
 
         fun destroy() {

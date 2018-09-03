@@ -7,7 +7,12 @@ import retrofit2.http.Query
 
 interface CardsApiService {
 
+    companion object {
+        const val PAGE_SIZE = 10
+    }
+
     @GET("cards")
-    fun get(): Call<CardListModel>
+    fun get(@Query("page") page: Int,
+            @Query("pageSize") pageSize: Int = PAGE_SIZE): Call<CardListModel>
 
 }

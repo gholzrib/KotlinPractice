@@ -7,11 +7,9 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.guntherribak.kotlinpractice.data.card.CardModel
 import com.example.guntherribak.kotlinpractice.databinding.FragmentCardsBinding
 import com.example.guntherribak.kotlinpractice.framework.BaseFragment
 import kotlinx.android.synthetic.main.fragment_cards.*
-import java.util.*
 
 class CardsFragment : BaseFragment<CardsViewModel>() {
 
@@ -31,10 +29,8 @@ class CardsFragment : BaseFragment<CardsViewModel>() {
         setupRecyclerView()
         viewModel.liveData.observe(
                 this,
-                Observer<List<CardModel>> { t ->
-                    adapter.updateList(t ?: mutableListOf())
-                })
-        viewModel.loadCards()
+                Observer(adapter::submitList))
+        viewModel.fetchCards()
     }
 
     override fun getType(): Class<CardsViewModel> {
@@ -43,7 +39,7 @@ class CardsFragment : BaseFragment<CardsViewModel>() {
 
     fun setupRecyclerView() {
         recyclerView.layoutManager = LinearLayoutManager(activity)
-        adapter = CardsAdapter(mutableListOf())
+        adapter = CardsAdapter()
         recyclerView.adapter = adapter
     }
 }

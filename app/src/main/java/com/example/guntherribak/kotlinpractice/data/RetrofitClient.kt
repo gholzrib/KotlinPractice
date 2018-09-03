@@ -14,7 +14,7 @@ object RetrofitClient {
                     .baseUrl("https://api.magicthegathering.io/v1/")
                     .build()
         }
-        return INSTANCE as Retrofit
+        return INSTANCE!!
     }
 
     fun destroy() {

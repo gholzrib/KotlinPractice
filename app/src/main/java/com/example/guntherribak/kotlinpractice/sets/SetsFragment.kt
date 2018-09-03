@@ -2,13 +2,11 @@ package com.example.guntherribak.kotlinpractice.sets
 
 import android.arch.lifecycle.Observer
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.guntherribak.kotlinpractice.R
-import com.example.guntherribak.kotlinpractice.data.set.SetModel
 import com.example.guntherribak.kotlinpractice.framework.BaseFragment
 import kotlinx.android.synthetic.main.fragment_sets.*
 
@@ -22,8 +20,9 @@ class SetsFragment : BaseFragment<SetsViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupRecyclerView()
-        viewModel.liveData.observe(this, Observer<List<SetModel>> { t -> adapter.updateList(t ?: mutableListOf()) })
-        viewModel.load()
+        viewModel.liveData.observe(
+                this, Observer(adapter::submitList))
+        viewModel.fetchSets()
     }
 
     override fun createViewModel(): SetsViewModel {

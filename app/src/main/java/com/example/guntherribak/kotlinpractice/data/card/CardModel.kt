@@ -3,16 +3,14 @@ package com.example.guntherribak.kotlinpractice.data.card
 import android.databinding.BindingAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import com.example.guntherribak.kotlinpractice.R
-import com.squareup.picasso.Picasso
 
 /**
  * Explanation about it field can be found at https://docs.magicthegathering.io/#api_v1cards_list
  */
-data class CardModel(val name: String,
+data class CardModel(val id: String, val name: String,
                      val names: List<String>,
                      val manaCost: String,
-                     val cmc: Int,
+                     val cmc: Double,
                      val colors: List<String>,
                      val colorIdentity: List<String>,
                      val type: String,
@@ -39,11 +37,11 @@ data class CardModel(val name: String,
         @JvmStatic
         @BindingAdapter("loadImageURL")
         fun loadImageURL(view: ImageView, url: String) {
-            Picasso.get()
+            /*Picasso.get()
                     .load(url)
                     .placeholder(R.color.colorAccent)
                     .error(R.color.colorPrimaryDark)
-                    .into(view)
+                    .into(view)*/
         }
     }
 }
